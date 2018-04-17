@@ -1,6 +1,6 @@
 {
   "name": "Get-A-Room API Documentation",
-  "version": "1.0.1",
+  "version": "1.3.0",
   "description": "Just a random message for document description",
   "template": {
     "forceLanguage": "en"
@@ -10,7 +10,7 @@
   "apidoc": "0.3.0",
   "generator": {
     "name": "apidoc",
-    "time": "2018-04-10T09:33:08.796Z",
+    "time": "2018-04-17T09:01:34.001Z",
     "url": "http://apidocjs.com",
     "version": "0.17.6"
   }
