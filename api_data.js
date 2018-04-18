@@ -361,7 +361,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success response:",
-          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel infos successfully\",\n  \"hotels\": [\n    {\n      \"_id\": \"5ad5aadc683a2523a423f7f0\",\n      \"name\": \"Chien Hostel\",\n      \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n      \"phoneNumber\": \"024 3932 9329\",\n      \"price\": 102000,\n      \"comforts\": [\n        \"wifi\",\n        \"nha hang\",\n        \"giat ui\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.849023,\n          21.029078\n        ]\n      },\n      \"isDisabled\": false,\n      \"dist\": 2677.2713959975576\n    }\n  ]\n}",
+          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel infos successfully\",\n  \"hotels\": [\n    {\n      \"_id\": \"5ad6f304683a251f98f29720\",\n      \"name\": \"Chien Hostel\",\n      \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n      \"phoneNumber\": \"024 3932 9329\",\n      \"price\": 102000,\n      \"comforts\": [\n        \"Wifi\",\n        \"Nhà hàng\",\n        \"Giặt ủi\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.849023,\n          21.029078\n        ]\n      },\n      \"isDisabled\": false,\n      \"dist\": 2677.2713959975576\n    }\n  ]\n}",
           "type": "type"
         }
       ]
@@ -425,7 +425,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request query example:",
-          "content": "\n/api/hotels/5ad5aadc683a2523a423f7f0",
+          "content": "\n/api/hotels/5ad6f304683a251f98f29720",
           "type": "json"
         }
       ]
@@ -536,7 +536,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success response:",
-          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel detail successfully\",\n  \"hotel\": {\n    \"_id\": \"5ad5aadc683a2523a423f7f0\",\n    \"name\": \"Chien Hostel\",\n    \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n    \"phoneNumber\": \"024 3932 9329\",\n    \"price\": 102000,\n    \"comforts\": [\n      \"wifi\",\n      \"nha hang\",\n      \"giat ui\"\n    ],\n    \"location\": {\n      \"type\": \"Point\",\n      \"coordinates\": [\n        105.849023,\n        21.029078\n      ]\n    },\n    \"isDisabled\": false,\n    \"photos\": [\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/0\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/1\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/2\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/3\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/4\"\n    ]\n  }\n}",
+          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel detail successfully\",\n  \"hotel\": {\n    \"_id\": \"5ad6f304683a251f98f29720\",\n    \"name\": \"Chien Hostel\",\n    \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n    \"phoneNumber\": \"024 3932 9329\",\n    \"price\": 102000,\n    \"comforts\": [\n      \"Wifi\",\n      \"Nhà hàng\",\n      \"Giặt ủi\"\n    ],\n    \"location\": {\n      \"type\": \"Point\",\n      \"coordinates\": [\n        105.849023,\n        21.029078\n      ]\n    },\n    \"isDisabled\": false,\n    \"photos\": [\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/0\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/1\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/2\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/3\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/4\"\n    ]\n  }\n}",
           "type": "type"
         }
       ]
@@ -565,26 +565,6 @@ define({ "api": [
     "title": "Get hotel photo",
     "group": "Hotels",
     "version": "1.3.0",
-    "header": {
-      "fields": {
-        "Header": [
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "Content-Type",
-            "description": "<p>Request header content type</p>"
-          },
-          {
-            "group": "Header",
-            "type": "String",
-            "optional": false,
-            "field": "x-access-token",
-            "description": "<p>Access token of user after logged in</p>"
-          }
-        ]
-      }
-    },
     "parameter": {
       "fields": {
         "Parameter": [
@@ -607,7 +587,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request query example:",
-          "content": "/api/hotels/5ad5aa97683a2523a423f7b9/photos/0",
+          "content": "/api/hotels/5ad6f304683a251f98f29720/photos/0",
           "type": "json"
         }
       ]
@@ -779,7 +759,14 @@ define({ "api": [
             "type": "String[]",
             "optional": false,
             "field": "savedHotel.comforts",
-            "description": "<p>Hotel comforts</p>"
+            "description": "<p>Hotel comforts in VNese</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String[]",
+            "optional": false,
+            "field": "savedHotel.formattedComforts",
+            "description": "<p>Hotel comforts in unicode (for searching)</p>"
           },
           {
             "group": "Success 200",
@@ -864,7 +851,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Saved successfully:",
-          "content": "HTTP 201 Created\n  {\n    \"success\": 1,\n    \"message\": \"Saved hotel successfully\",\n    \"savedHotel\": {\n      \"comforts\": [ \n        \"wifi\", \n        \"nong lanh\", \n        \"dieu hoa\", \n        \"condom\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.814703,\n          21.021383\n        ]\n      },\n      \"photos\": [\n        \"https://images.foody.vn/res/g14/138986/prof/s576x330/foody-mobile-a2-jpg-261-635682356468932282.jpg\",\n        \"https://static3.mytour.vn/resources/pictures/hotels/19/large_vlj1419841660_khach-san-gia-han.JPG\"\n      ],\n      \"_id\": \"5ac79851f9a0dd04d40fc841\",\n      \"name\": \"Bún ốc lọ\",\n      \"address\": \"113 B5 Thành Công\",\n      \"phoneNumber\": \"0987654321\",\n      \"price\": 300000,\n      \"isDisabled\": false,\n      \"__v\": 0\n    }\n  }",
+          "content": "HTTP 201 Created\n  {\n    \"success\": 1,\n    \"message\": \"Saved hotel successfully\",\n    \"savedHotel\": {\n      \"comforts\": [\n        \"wifi\",\n        \"Nóng lạnh\",\n        \"Điều hòa\",\n        \"Condom\"\n      ],\n      \"formattedComforts\": [\n        \"wifi\",\n        \"nong lanh\",\n        \"dieu hoa\",\n        \"condom\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.814703,\n          21.021383\n        ]\n      },\n      \"photos\": [\n        \"https://images.foody.vn/res/g14/138986/prof/s576x330/foody-mobile-a2-jpg-261-635682356468932282.jpg\",\n        \"https://static3.mytour.vn/resources/pictures/hotels/19/large_vlj1419841660_khach-san-gia-han.JPG\"\n      ],\n      \"_id\": \"5ac79851f9a0dd04d40fc841\",\n      \"name\": \"Bún ốc lọ\",\n      \"address\": \"113 B5 Thành Công\",\n      \"phoneNumber\": \"0987654321\",\n      \"price\": 300000,\n      \"isDisabled\": false,\n      \"__v\": 0\n    }\n  }",
           "type": "json"
         }
       ]
