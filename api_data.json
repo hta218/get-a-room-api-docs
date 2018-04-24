@@ -166,7 +166,7 @@
     "url": "/api/hotels",
     "title": "Find hotels",
     "group": "Hotels",
-    "version": "1.2.2",
+    "version": "1.4.0",
     "header": {
       "fields": {
         "Header": [
@@ -240,6 +240,20 @@
           },
           {
             "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "priceType",
+            "description": "<p>Type of hotel price that user want to find <br> <code>0</code> Find by <b>overnight</b> price  <br> <code>1</code> Find by <b>hourly</b> price  <br> <b>Default value: </b> <code>0</code></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "sortType",
+            "description": "<p>Sort type: <br> <code>0</code> Sort by <b>distance</b>  <br> <code>1</code> Sort by <b>price</b>   <br> <code>2</code> Sort by <b>average review point</b> <br> <b>Default value: </b> <code>0</code></p>"
+          },
+          {
+            "group": "Parameter",
             "type": "String",
             "optional": true,
             "field": "comforts",
@@ -250,7 +264,7 @@
       "examples": [
         {
           "title": "Request query example:",
-          "content": "\n/api/hotels?longitude=105.84334749999994&latitude=21.0056183&minDistance=2&maxDistance=5&minPrice=50000&maxPrice=150000&comforts=wifi,condom,nong lanh",
+          "content": "\n/api/hotels?longitude=105.84334749999994&latitude=21.0056183&minDistance=2&maxDistance=3&minPrice=90000&maxPrice=150000&priceType=0&comforts=wifi,condom,nong lanh&sortType=1",
           "type": "type"
         }
       ]
@@ -309,10 +323,24 @@
           },
           {
             "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "hotels.prices",
+            "description": "<p>Hotel prices</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "Number",
             "optional": false,
-            "field": "hotels.price",
-            "description": "<p>Hotel price</p>"
+            "field": "hotels.prices.hour",
+            "description": "<p>Hotel price by hour</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "hotels.prices.overnight",
+            "description": "<p>Hotel price by overnight</p>"
           },
           {
             "group": "Success 200",
@@ -355,13 +383,20 @@
             "optional": false,
             "field": "hotels.dist",
             "description": "<p>Distance from hotel to user location in <code>&quot;m&quot;</code></p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "hotels.avgReview",
+            "description": "<p>Avarage Review point of hotel</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success response:",
-          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel infos successfully\",\n  \"hotels\": [\n    {\n      \"_id\": \"5ad6f304683a251f98f29720\",\n      \"name\": \"Chien Hostel\",\n      \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n      \"phoneNumber\": \"024 3932 9329\",\n      \"price\": 102000,\n      \"comforts\": [\n        \"Wifi\",\n        \"Nhà hàng\",\n        \"Giặt ủi\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.849023,\n          21.029078\n        ]\n      },\n      \"isDisabled\": false,\n      \"dist\": 2677.2713959975576\n    }\n  ]\n}",
+          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel infos successfully\",\n  \"hotels\": [\n    {\n      \"_id\": \"5add9cfa683a25154041c65f\",\n      \"name\": \"Chien Hostel\",\n      \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n      \"phoneNumber\": \"024 3932 9329\",\n      \"prices\": {\n        \"hour\": 100000,\n        \"overnight\": 102000\n      },\n      \"comforts\": [\n        \"Wifi\",\n        \"Nhà hàng\",\n        \"Giặt ủi\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.849023,\n          21.029078\n        ]\n      },\n      \"isDisabled\": false,\n      \"dist\": 2677.2713959975576,\n      \"avgReview\": 3.8\n    }\n  ]\n}",
           "type": "type"
         }
       ]
@@ -389,7 +424,7 @@
     "url": "/api/hotels/:id",
     "title": "Get a hotel details",
     "group": "Hotels",
-    "version": "1.2.2",
+    "version": "1.4.0",
     "header": {
       "fields": {
         "Header": [
@@ -425,7 +460,7 @@
       "examples": [
         {
           "title": "Request query example:",
-          "content": "\n/api/hotels/5ad6f304683a251f98f29720",
+          "content": "\n/api/hotels/5add9cfa683a25154041c65f",
           "type": "json"
         }
       ]
@@ -453,6 +488,62 @@
             "optional": false,
             "field": "hotel",
             "description": "<p>Hotel information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "hotel.reviews",
+            "description": "<p><code>10 first</code> hotel reviews</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "hotel.reviews._id",
+            "description": "<p>Hotel's review id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Date",
+            "optional": false,
+            "field": "hotel.reviews.date",
+            "description": "<p>Hotel's review id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "hotel.reviews.point",
+            "description": "<p>Hotel's review point</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "hotel.reviews.comment",
+            "description": "<p>Hotel's review comment</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "hotel.reviews.user",
+            "description": "<p>Hotel's review user</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "hotel.reviews.user._id",
+            "description": "<p>Hotel's review user id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "hotel.reviews.user.name",
+            "description": "<p>Hotel's review user name</p>"
           },
           {
             "group": "Success 200",
@@ -484,10 +575,24 @@
           },
           {
             "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "hotel.prices",
+            "description": "<p>Hotel prices</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "Number",
             "optional": false,
-            "field": "hotel.price",
-            "description": "<p>Hotel price</p>"
+            "field": "hotel.prices.hour",
+            "description": "<p>Hotel price by hour</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "hotel.prices.overnight",
+            "description": "<p>Hotel price by overnight</p>"
           },
           {
             "group": "Success 200",
@@ -519,6 +624,13 @@
           },
           {
             "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "hotel.avgReview",
+            "description": "<p>Avarage Review point of hotel</p>"
+          },
+          {
+            "group": "Success 200",
             "type": "Boolean",
             "optional": false,
             "field": "hotel.isDisabled",
@@ -536,7 +648,7 @@
       "examples": [
         {
           "title": "Success response:",
-          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel detail successfully\",\n  \"hotel\": {\n    \"_id\": \"5ad6f304683a251f98f29720\",\n    \"name\": \"Chien Hostel\",\n    \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n    \"phoneNumber\": \"024 3932 9329\",\n    \"price\": 102000,\n    \"comforts\": [\n      \"Wifi\",\n      \"Nhà hàng\",\n      \"Giặt ủi\"\n    ],\n    \"location\": {\n      \"type\": \"Point\",\n      \"coordinates\": [\n        105.849023,\n        21.029078\n      ]\n    },\n    \"isDisabled\": false,\n    \"photos\": [\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/0\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/1\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/2\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/3\",\n      \"localhost:5000/api/hotels/5ad5aadc683a2523a423f7f0/photos/4\"\n    ]\n  }\n}",
+          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel detail successfully\",\n  \"hotel\": {\n    \"reviews\": [\n      {\n        \"_id\": \"5aded60c0e16180160f76a4d\",\n        \"date\": \"2018-04-24T07:00:28.679Z\",\n        \"point\": 5,\n        \"comment\": \"Nhân viên phục vụ hết sức chu đáo\",\n        \"user\": {\n          \"_id\": \"5ad2d96013780f9b556f0a6e\",\n          \"name\": \"Vũ Kiên\"\n        }\n      }\n    ]\n    \"_id\": \"5add9cfa683a25154041c65f\",\n    \"name\": \"Chien Hostel\",\n    \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n    \"phoneNumber\": \"024 3932 9329\",\n    \"prices\": {\n      \"hour\": 100000,\n      \"overnight\": 393000\n    },\n    \"comforts\": [\n      \"Wifi\",\n      \"Nhà hàng\",\n      \"Giặt ủi\"\n    ],\n    \"location\": {\n      \"type\": \"Point\",\n      \"coordinates\": [\n        105.849023,\n        21.029078\n      ]\n    },\n    \"isDisabled\": false,\n    \"photos\": [\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/0\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/1\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/2\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/3\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/4\"\n    ]\n  }\n}",
           "type": "type"
         }
       ]
@@ -564,7 +676,7 @@
     "url": "/api/hotels/:id/photos/:photoNo",
     "title": "Get hotel photo",
     "group": "Hotels",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -587,7 +699,7 @@
       "examples": [
         {
           "title": "Request query example:",
-          "content": "/api/hotels/5ad6f304683a251f98f29720/photos/0",
+          "content": "/api/hotels/5add9cfa683a25154041c65f/photos/4",
           "type": "json"
         }
       ]
@@ -633,7 +745,7 @@
     "url": "/api/hotels",
     "title": "Add new hotel",
     "group": "Hotels",
-    "version": "1.2.2",
+    "version": "1.4.0",
     "header": {
       "fields": {
         "Header": [
@@ -680,10 +792,24 @@
           },
           {
             "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "prices",
+            "description": "<p>Hotel price</p>"
+          },
+          {
+            "group": "Parameter",
             "type": "Number",
             "optional": false,
-            "field": "price",
-            "description": "<p>Hotel price</p>"
+            "field": "prices.hour",
+            "description": "<p>Hotel price by hourly</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "prices.overnight",
+            "description": "<p>Hotel price by overnight</p>"
           },
           {
             "group": "Parameter",
@@ -725,7 +851,7 @@
       "examples": [
         {
           "title": "Request body",
-          "content": "{\n     \"name\" : \"Bún ốc lọ\",\n     \"address\": \"113 B5 Thành Công\",\n     \"phoneNumber\": 987654321,\n     \"price\" : 300000,\n     \"comforts\": [\"wifi\", \"nong lanh\", \"dieu hoa\", \"condom\"],\n     \"location\": {\n       \"type\" : \"Point\",\n       \"coordinates\": [105.814703, 21.021383]\n     },\n     \"photos\" : [\n       \"https://images.foody.vn/res/g14/138986/prof/s576x330/foody-mobile-a2-jpg-261-635682356468932282.jpg\",\n       \"https://static3.mytour.vn/resources/pictures/hotels/19/large_vlj1419841660_khach-san-gia-han.JPG\"\n     ]\n   }",
+          "content": "{\n     \"name\" : \"Bún ốc lọ\",\n     \"address\": \"113 B5 Thành Công\",\n     \"phoneNumber\": 987654321,\n     \"prices\" : {\n       \"hour\" : 50000,\n       \"overnight\": 350000\n     },\n     \"comforts\": [\"wifi\", \"nong lanh\", \"dieu hoa\", \"condom\"],\n     \"location\": {\n       \"type\" : \"Point\",\n       \"coordinates\": [105.814703, 21.021383]\n     },\n     \"photos\" : [\n       \"https://images.foody.vn/res/g14/138986/prof/s576x330/foody-mobile-a2-jpg-261-635682356468932282.jpg\",\n       \"https://static3.mytour.vn/resources/pictures/hotels/19/large_vlj1419841660_khach-san-gia-han.JPG\"\n     ]\n   }",
           "type": "json"
         }
       ]
@@ -826,10 +952,24 @@
           },
           {
             "group": "Success 200",
-            "type": "Number",
+            "type": "Object",
             "optional": false,
             "field": "savedHotel.price",
-            "description": "<p>Hotel price</p>"
+            "description": "<p>Hotel prices</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "savedHotel.price.hour",
+            "description": "<p>Hotel price by hourly</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "savedHotel.price.overnight",
+            "description": "<p>Hotel price by overnight</p>"
           },
           {
             "group": "Success 200",
@@ -851,7 +991,7 @@
       "examples": [
         {
           "title": "Saved successfully:",
-          "content": "HTTP 201 Created\n  {\n    \"success\": 1,\n    \"message\": \"Saved hotel successfully\",\n    \"savedHotel\": {\n      \"comforts\": [\n        \"wifi\",\n        \"Nóng lạnh\",\n        \"Điều hòa\",\n        \"Condom\"\n      ],\n      \"formattedComforts\": [\n        \"wifi\",\n        \"nong lanh\",\n        \"dieu hoa\",\n        \"condom\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.814703,\n          21.021383\n        ]\n      },\n      \"photos\": [\n        \"https://images.foody.vn/res/g14/138986/prof/s576x330/foody-mobile-a2-jpg-261-635682356468932282.jpg\",\n        \"https://static3.mytour.vn/resources/pictures/hotels/19/large_vlj1419841660_khach-san-gia-han.JPG\"\n      ],\n      \"_id\": \"5ac79851f9a0dd04d40fc841\",\n      \"name\": \"Bún ốc lọ\",\n      \"address\": \"113 B5 Thành Công\",\n      \"phoneNumber\": \"0987654321\",\n      \"price\": 300000,\n      \"isDisabled\": false,\n      \"__v\": 0\n    }\n  }",
+          "content": "HTTP 201 Created\n  {\n    \"success\": 1,\n    \"message\": \"Saved hotel successfully\",\n    \"savedHotel\": {\n      \"prices\": {\n        \"hour\": 50000,\n        \"overnight\": 350000\n      },\n      \"comforts\": [\n        \"wifi\",\n        \"Nóng lạnh\",\n        \"Điều hòa\",\n        \"Condom\"\n      ],\n      \"formattedComforts\": [\n        \"wifi\",\n        \"nong lanh\",\n        \"dieu hoa\",\n        \"condom\"\n      ],\n      \"location\": {\n        \"type\": \"Point\",\n        \"coordinates\": [\n          105.814703,\n          21.021383\n        ]\n      },\n      \"photos\": [\n        \"https://images.foody.vn/res/g14/138986/prof/s576x330/foody-mobile-a2-jpg-261-635682356468932282.jpg\",\n        \"https://static3.mytour.vn/resources/pictures/hotels/19/large_vlj1419841660_khach-san-gia-han.JPG\"\n      ],\n      \"_id\": \"5addb30721760b1e9cf23043\",\n      \"name\": \"Bún ốc lọ\",\n      \"address\": \"113 B5 Thành Công\",\n      \"phoneNumber\": \"0987654321\",\n      \"isDisabled\": false,\n      \"__v\": 0\n    }\n  }",
           "type": "json"
         }
       ]
@@ -873,6 +1013,527 @@
     "filename": "./routes/hotel/index.js",
     "groupTitle": "Hotels",
     "name": "PostApiHotels"
+  },
+  {
+    "type": "delete",
+    "url": "/api/reviews/:id",
+    "title": "Delete review",
+    "group": "Reviews",
+    "version": "1.4.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Review's id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request query example:",
+          "content": "/api/reviews/5addedf25301382c5061da01",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Response status</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Response message</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": false,
+            "field": "deletedReview",
+            "description": "<p>Deleted review</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n      \"success\": 0,\n      \"message\": \"Delete review fail\",\n      \"deletedReview\": {}\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Invalid or outdated access token",
+          "content": "HTTP 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "Get error",
+          "content": "HTTP 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./routes/review.js",
+    "groupTitle": "Reviews",
+    "name": "DeleteApiReviewsId"
+  },
+  {
+    "type": "get",
+    "url": "/api/reviews/:id",
+    "title": "Get review's detail",
+    "group": "Reviews",
+    "version": "1.4.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>Request header content type</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "x-access-token",
+            "description": "<p>Access token of user after logged in</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Review's id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request query example:",
+          "content": "/api/reviews/5aded60c0e16180160f76a4d",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Response status</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Response message</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Response dummy data</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data._id",
+            "description": "<p>Review's id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.user",
+            "description": "<p>Review's user-id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.hotel",
+            "description": "<p>Review's hotel-id</p>"
+          },
+          {
+            "group": "200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.date",
+            "description": "<p>Review's date</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "data.point",
+            "description": "<p>Review's point</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.comment",
+            "description": "<p>Review's comment</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "data.__v",
+            "description": "<p>Never mind</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n        \"success\": 1,\n        \"message\": \"Loaded\",\n        \"data\": {\n            \"_id\": \"5aded60c0e16180160f76a4d\",\n            \"user\": \"5ad2d96013780f9b556f0a6e\",\n            \"hotel\": \"5add9cfa683a25154041c65f\",\n            \"date\": \"2018-04-24T07:00:28.679Z\",\n            \"point\": 5,\n            \"comment\": \"Nhân viên phục vụ hết sức chu đáo\",\n            \"__v\": 0\n        }\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Invalid or outdated access token",
+          "content": "HTTP 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "Get error",
+          "content": "HTTP 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./routes/review.js",
+    "groupTitle": "Reviews",
+    "name": "GetApiReviewsId"
+  },
+  {
+    "type": "patch",
+    "url": "/api/reviews/:id",
+    "title": "Update review",
+    "group": "Reviews",
+    "version": "1.4.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "point",
+            "description": "<p>User's id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": true,
+            "field": "comment",
+            "description": "<p>Hotel's id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Review updated date</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request body:",
+          "content": " {   \n        \"date\": \"2018-04-23T14:30:22.388Z\",\n        \"point\": 3,\n\t    \"comment\": \"Nhân viên phục vụ kém\"\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Response status</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Response message</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Response dummy data</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data._id",
+            "description": "<p>Review's id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.user",
+            "description": "<p>Review's user-id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.hotel",
+            "description": "<p>Review's hotel-id</p>"
+          },
+          {
+            "group": "200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.date",
+            "description": "<p>Review's date</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "data.point",
+            "description": "<p>Review's point</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.comment",
+            "description": "<p>Review's comment</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "data.__v",
+            "description": "<p>Never mind</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n        \"data\": {\n            \"_id\": \"5adefef3a3b9891de809d50d\",\n            \"user\": \"5ad2d96013780f9b556f0a6e\",\n            \"hotel\": \"5add9c9f683a25154041c628\",\n            \"date\": \"2018-04-24T07:18:14.353Z\",\n            \"point\": 5,\n            \"comment\": \"Thiếu ba con sói\",\n            \"__v\": 0\n        }\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Invalid or outdated access token",
+          "content": "HTTP 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "Get error",
+          "content": "HTTP 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./routes/review.js",
+    "groupTitle": "Reviews",
+    "name": "PatchApiReviewsId"
+  },
+  {
+    "type": "post",
+    "url": "/api/reviews",
+    "title": "Create new review",
+    "group": "Reviews",
+    "version": "1.4.0",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "user",
+            "description": "<p>User's id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "hotel",
+            "description": "<p>Hotel's id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Date",
+            "optional": false,
+            "field": "date",
+            "description": "<p>Review date</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "point",
+            "description": "<p>Review's point</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "comment",
+            "description": "<p>Review's comment</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request body:",
+          "content": "{\n       \"user\": \"5ad2d96013780f9b556f0a6e\",\n       \"hotel\": \"5add9c9f683a25154041c628\",\n       \"date\": \"2018-04-24T07:18:14.353Z\",\n       \"point\": 5,\n       \"comment\": \"Thiếu ba con sói\"\n   }",
+          "type": "json"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "200": [
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Response status</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Response message</p>"
+          },
+          {
+            "group": "200",
+            "type": "Object",
+            "optional": false,
+            "field": "data",
+            "description": "<p>Response dummy data</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data._id",
+            "description": "<p>Review's id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.user",
+            "description": "<p>Review's user-id</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.hotel",
+            "description": "<p>Review's hotel-id</p>"
+          },
+          {
+            "group": "200",
+            "type": "Date",
+            "optional": false,
+            "field": "data.date",
+            "description": "<p>Review's date</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "data.point",
+            "description": "<p>Review's point</p>"
+          },
+          {
+            "group": "200",
+            "type": "String",
+            "optional": false,
+            "field": "data.comment",
+            "description": "<p>Review's comment</p>"
+          },
+          {
+            "group": "200",
+            "type": "Number",
+            "optional": false,
+            "field": "data.__v",
+            "description": "<p>Never mind</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "{\n        \"data\": {\n            \"_id\": \"5adefef3a3b9891de809d50d\",\n            \"user\": \"5ad2d96013780f9b556f0a6e\",\n            \"hotel\": \"5add9c9f683a25154041c628\",\n            \"date\": \"2018-04-24T07:18:14.353Z\",\n            \"point\": 5,\n            \"comment\": \"Thiếu ba con sói\",\n            \"__v\": 0\n        }\n    }",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Invalid or outdated access token",
+          "content": "HTTP 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "Get error",
+          "content": "HTTP 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./routes/review.js",
+    "groupTitle": "Reviews",
+    "name": "PostApiReviews"
   },
   {
     "type": "get",
