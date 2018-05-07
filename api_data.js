@@ -1393,13 +1393,6 @@ define({ "api": [
             "group": "Parameter",
             "type": "String",
             "optional": false,
-            "field": "user",
-            "description": "<p>User's id</p>"
-          },
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
             "field": "hotel",
             "description": "<p>Hotel's id</p>"
           },
@@ -1429,7 +1422,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Request body:",
-          "content": "{\n       \"user\": \"5ad2d96013780f9b556f0a6e\",\n       \"hotel\": \"5add9c9f683a25154041c628\",\n       \"date\": \"2018-04-24T07:18:14.353Z\",\n       \"point\": 5,\n       \"comment\": \"Thiếu ba con sói\"\n   }",
+          "content": "{\n       \"hotel\": \"5add9c9f683a25154041c628\",\n       \"date\": \"2018-04-24T07:18:14.353Z\",\n       \"point\": 5,\n       \"comment\": \"Thiếu ba con sói\"\n   }",
           "type": "json"
         }
       ]
