@@ -494,7 +494,7 @@ define({ "api": [
             "type": "Object[]",
             "optional": false,
             "field": "hotel.reviews",
-            "description": "<p><code>10 first</code> hotel reviews</p>"
+            "description": "<p><code>10 latest</code> hotel reviews</p>"
           },
           {
             "group": "Success 200",
@@ -1302,14 +1302,14 @@ define({ "api": [
             "type": "String",
             "optional": true,
             "field": "point",
-            "description": "<p>User's id</p>"
+            "description": "<p>Review's point</p>"
           },
           {
             "group": "Parameter",
             "type": "String",
             "optional": true,
             "field": "comment",
-            "description": "<p>Hotel's id</p>"
+            "description": "<p>Review's comment</p>"
           },
           {
             "group": "Parameter",
@@ -1406,13 +1406,18 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n        \"data\": {\n            \"_id\": \"5adefef3a3b9891de809d50d\",\n            \"user\": \"5ad2d96013780f9b556f0a6e\",\n            \"hotel\": \"5add9c9f683a25154041c628\",\n            \"date\": \"2018-04-24T07:18:14.353Z\",\n            \"point\": 5,\n            \"comment\": \"Thiếu ba con sói\",\n            \"__v\": 0\n        }\n    }",
+          "content": "{\n    \"success\": 1,\n    \"message\": \"Updated hotel review\",\n    \"updatedReview\": {\n        \"_id\": \"5af2d0934fd9d23204c5ae0e\",\n        \"date\": \"2018-05-09T10:56:39.139Z\",\n        \"point\": 2,\n        \"comment\": \"Nhân viên phục vụ kém\"\n    }\n}",
           "type": "json"
         }
       ]
     },
     "error": {
       "examples": [
+        {
+          "title": "Review not found",
+          "content": "HTTP 400",
+          "type": "json"
+        },
         {
           "title": "Invalid or outdated access token",
           "content": "HTTP 401 Unauthorized",
@@ -1554,7 +1559,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "{\n        \"data\": {\n            \"_id\": \"5adefef3a3b9891de809d50d\",\n            \"user\": \"5ad2d96013780f9b556f0a6e\",\n            \"hotel\": \"5add9c9f683a25154041c628\",\n            \"date\": \"2018-04-24T07:18:14.353Z\",\n            \"point\": 5,\n            \"comment\": \"Thiếu ba con sói\",\n            \"__v\": 0\n        }\n    }",
+          "content": "{\n    \"success\": 1,\n    \"message\": \"Review created\",\n    \"data\": {\n        \"_id\": \"5af2d0934fd9d23204c5ae0e\",\n        \"date\": \"2018-04-24T07:18:14.353Z\",\n        \"point\": 5,\n        \"comment\": \"Thiếu ba con sói\"\n    }\n}",
           "type": "json"
         }
       ]
