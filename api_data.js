@@ -790,6 +790,146 @@ define({ "api": [
     "name": "GetApiHotelsIdPhotosPhotono"
   },
   {
+    "type": "get",
+    "url": "/api/hotels/:id/reviews",
+    "title": "Get hotel's reviews",
+    "group": "Hotels",
+    "version": "1.5.0",
+    "header": {
+      "fields": {
+        "Header": [
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "Content-Type",
+            "description": "<p>Request header content type</p>"
+          },
+          {
+            "group": "Header",
+            "type": "String",
+            "optional": false,
+            "field": "x-access-token",
+            "description": "<p>Access token of user after logged in</p>"
+          }
+        ]
+      }
+    },
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "id",
+            "description": "<p>Hotel's id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "page",
+            "description": "<p>Pagination of reviews <b>Start at <code>1</code></b> <br> <b>Default value: </b> <code>1</code></p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": true,
+            "field": "limit",
+            "description": "<p>Max reviews in a page <br> <b>Default value: </b> <code>10</code></p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request query example:",
+          "content": "\n/api/hotels/5add9cbe683a25154041c63e/reviews?page=1&limit=10",
+          "type": "type"
+        }
+      ]
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "success",
+            "description": "<p>Response status</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "message",
+            "description": "<p>Response message</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "reviews",
+            "description": "<p>Reviews</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "reviews._id",
+            "description": "<p>Review's id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "reviews.date",
+            "description": "<p>Review's date</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "reviews.point",
+            "description": "<p>Review's point</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "reviews.comment",
+            "description": "<p>Review's comment</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success response:",
+          "content": "{\n  \"success\": 1,\n  \"message\": \"Loaded ok\",\n  \"reviews\": [\n    {\n      \"_id\": \"5af400d3eb3b623105560a4d\",\n      \"date\": \"2018-05-10T15:20:33.000Z\",\n      \"point\": 6,\n      \"comment\": \"\"\n    }\n  ]\n}",
+          "type": "type"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Invalid or outdated access token",
+          "content": "HTTP 401 Unauthorized",
+          "type": "json"
+        },
+        {
+          "title": "Get error",
+          "content": "HTTP 500 Internal Server Error",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "./routes/hotel/index.js",
+    "groupTitle": "Hotels",
+    "name": "GetApiHotelsIdReviews"
+  },
+  {
     "type": "post",
     "url": "/api/hotels",
     "title": "Add new hotel",
