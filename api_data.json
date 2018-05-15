@@ -626,6 +626,13 @@
             "group": "Success 200",
             "type": "Number",
             "optional": false,
+            "field": "hotel.reviewCount",
+            "description": "<p>Total reviews of this hotel</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
             "field": "hotel.avgReview",
             "description": "<p>Avarage Review point of hotel</p>"
           },
@@ -697,7 +704,7 @@
       "examples": [
         {
           "title": "Success response:",
-          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel detail successfully\",\n  \"hotel\": {\n    \"reviews\": [\n      {\n        \"_id\": \"5aded60c0e16180160f76a4d\",\n        \"date\": \"2018-04-24T07:00:28.679Z\",\n        \"point\": 5,\n        \"comment\": \"Nhân viên phục vụ hết sức chu đáo\",\n        \"user\": {\n          \"_id\": \"5ad2d96013780f9b556f0a6e\",\n          \"name\": \"Vũ Kiên\"\n        }\n      }\n    ]\n    \"_id\": \"5add9cfa683a25154041c65f\",\n    \"name\": \"Chien Hostel\",\n    \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n    \"phoneNumber\": \"024 3932 9329\",\n    \"prices\": {\n      \"hour\": 100000,\n      \"overnight\": 393000\n    },\n    \"comforts\": [\n      \"Wifi\",\n      \"Nhà hàng\",\n      \"Giặt ủi\"\n    ],\n    \"location\": {\n      \"type\": \"Point\",\n      \"coordinates\": [\n        105.849023,\n        21.029078\n      ]\n    },\n    \"isDisabled\": false,\n    \"photos\": [\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/0\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/1\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/2\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/3\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/4\"\n    ],\n    \"userReview\": {\n      \"_id\": \"5addd66f90e89f23d042bf2f\",\n      \"user\": \"5ac5f595c17f1115fc42b70d\",\n      \"hotel\": \"5add9cbe683a25154041c63e\",\n      \"date\": \"2018-04-23T12:49:51.248Z\",\n      \"point\": 9,\n      \"comment\": \"Nhân viên phục vụ hết sức chu đáo\",\n      \"__v\": 0\n    }\n  }\n}",
+          "content": "{\n  \"success\": 1,\n  \"message\": \"Fetch hotel detail successfully\",\n  \"hotel\": {\n    \"reviews\": [\n      {\n        \"_id\": \"5aded60c0e16180160f76a4d\",\n        \"date\": \"2018-04-24T07:00:28.679Z\",\n        \"point\": 5,\n        \"comment\": \"Nhân viên phục vụ hết sức chu đáo\",\n        \"user\": {\n          \"_id\": \"5ad2d96013780f9b556f0a6e\",\n          \"name\": \"Vũ Kiên\"\n        }\n      }\n    ]\n    \"_id\": \"5add9cfa683a25154041c65f\",\n    \"name\": \"Chien Hostel\",\n    \"address\": \"12&14 Ấu Triệu, Hàng Trống, Quận Hoàn Kiếm, Hà Nội\",\n    \"phoneNumber\": \"024 3932 9329\",\n    \"prices\": {\n      \"hour\": 100000,\n      \"overnight\": 393000\n    },\n    \"comforts\": [\n      \"Wifi\",\n      \"Nhà hàng\",\n      \"Giặt ủi\"\n    ],\n    \"location\": {\n      \"type\": \"Point\",\n      \"coordinates\": [\n        105.849023,\n        21.029078\n      ]\n    },\n    \"isDisabled\": false,\n    \"photos\": [\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/0\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/1\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/2\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/3\",\n      \"localhost:5000/api/hotels/5add9cfa683a25154041c65f/photos/4\"\n    ],\n    \"reviewCount\": 6,\n    \"userReview\": {\n      \"_id\": \"5addd66f90e89f23d042bf2f\",\n      \"user\": \"5ac5f595c17f1115fc42b70d\",\n      \"hotel\": \"5add9cbe683a25154041c63e\",\n      \"date\": \"2018-04-23T12:49:51.248Z\",\n      \"point\": 9,\n      \"comment\": \"Nhân viên phục vụ hết sức chu đáo\",\n      \"__v\": 0\n    }\n  }\n}",
           "type": "type"
         }
       ]
